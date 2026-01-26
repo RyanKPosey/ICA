@@ -26,3 +26,7 @@ checkingAccountType.o: checkingAccountType.cpp checkingAccountType.h bankAccount
 
 clean:
 	rm -f run-tests *.o *~
+
+.PHONY: run run-tests clean
+run: run-tests
+	./run-tests
