@@ -8,12 +8,12 @@ highInterestCheckingType::highInterestCheckingType(const std::string& name,int a
 
 void highInterestCheckingType::createMonthlyStatement()
 {
-    balance += balance * monthlyInterestRate;
+    balance_ += balance_ * monthlyInterestRate_;
 }
 
 void highInterestCheckingType::print() const
 {
     std::cout << "[highInterestCheckingType]\n";
     bankAccountType::print();
-    std::cout << "Monthly interest rate: " << (monthlyInterestRate * 100) << "%\n";
+    std::cout << "Monthly interest rate: " << (monthlyInterestRate_ * 100) << "%\n";
 }

@@ -1,6 +1,8 @@
 #include <iostream>
-#include <noServiceChargeCheckingType.h>
+#include "noServiceChargeCheckingType.h"
 
-noServiceChargeCheckingType::noServiceChargeCheckingType(std::string name, int accountNumber, int accountBalance){
+noServiceChargeCheckingType::noServiceChargeCheckingType(const std::string& name, int accountNumber, double accountBalance)
+    : bankAccountType(name, accountNumber, accountBalance)
+{
     std::cout << "noServiceChargeCheckingType constructor\n";
 }

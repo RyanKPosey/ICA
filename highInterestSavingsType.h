@@ -2,10 +2,12 @@
 #define HIGH_INTEREST_SAVINGS_TYPE_H
 
 #include <string>
+#include "bankAccountType.h"
 
-class highInterestSavingsType {
+class highInterestSavingsType : public bankAccountType
+{
 public:
-    highInterestSavingsType(std::string name, int accountNumber, int accountBalance);           
+    highInterestSavingsType(const std::string& name, int accountNumber, double accountBalance);           
 };
 
 #endif

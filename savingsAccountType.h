@@ -2,11 +2,12 @@
 #define SAVINGS_ACCOUNT_TYPE_H
 
 #include <string>
+#include "bankAccountType.h"
 
-class savingsAccountType
+class savingsAccountType : public bankAccountType
 {
 public:
-    savingsAccountType(std::string name, int accountNumber, int accountBalance);
+    savingsAccountType(const std::string& name, int accountNumber, double accountBalance);
 };
 
 #endif
