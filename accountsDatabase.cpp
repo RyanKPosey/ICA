@@ -99,6 +99,7 @@ bool AccountsDatabase::isStrongPassword(const std::string& password) const
     return hasUpper && hasLower && hasDigit && hasSymbol;
 }
 
+// Need to replace hashing algo to a better one with salting in future
 std::string AccountsDatabase::hashPassword(const std::string& password) const
 {
     const std::size_t hashed = std::hash<std::string>{}(password);
