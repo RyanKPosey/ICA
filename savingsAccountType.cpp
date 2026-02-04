@@ -1,8 +1,10 @@
 #include <iostream>
 #include "savingsAccountType.h"
 
-savingsAccountType::savingsAccountType(const std::string& name, int accountNumber, double accountBalance)
-    : bankAccountType(name, accountNumber, accountBalance)
+savingsAccountType::savingsAccountType(const std::string& name, int accountNumber, double accountBalance, int foreignKey)
 {
-    std::cout << "savingsAccountType constructor" << std::endl;
+    name_ = name;
+    accountNumber_ = accountNumber;
+    balance_ = accountBalance;
+    foreignKey_ = foreignKey;
 }

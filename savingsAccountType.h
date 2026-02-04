@@ -4,10 +4,17 @@
 #include <string>
 #include "bankAccountType.h"
 
-class savingsAccountType : public bankAccountType
+using namespace std;
+
+class savingsAccountType
 {
 public:
-    savingsAccountType(const std::string& name, int accountNumber, double accountBalance);
+    savingsAccountType(const std::string& name, int accountNumber, double accountBalance, int foreignKey);
+private:
+    int foreignKey_;
+    double accountBalance_;
+    int accountNumber_;
+    string name_;
 };
 
 #endif
