@@ -272,8 +272,14 @@ void UserInterface::withdrawFlow(bool isChecking) {
         ? db_.withdrawChecking(currentUserId_, amt) // TODO_CALL_DB
         : db_.withdrawSavings(currentUserId_, amt); // TODO_CALL_DB
 
-    if (!ok) std::cout << "Withdraw failed.\n";
-    else std::cout << "Withdraw successful.\n";
+    if (!ok) {
+        std::cout << "Withdraw failed.\n";
+    } else { 
+        std::cout << "Withdraw successful.\n";
+        if (!isChecking) {
+            std::cout << "A $5.00 withdrawal fee has been charged to your account.\n";
+        }
+    }
 }
 
 void UserInterface::transferFlow(bool fromChecking) {
