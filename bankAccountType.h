@@ -24,7 +24,7 @@ public:
 
     // Core banking operations
     virtual void deposit(double amount);
-    virtual void withdraw(double amount);  // stub OK for Sprint 0
+    virtual bool withdraw(double amount);  // stub OK for Sprint 0
     virtual void print() const;            // stub OK for Sprint 0
     virtual void createMonthlyStatement(); // stub OK for Sprint 0
 
