@@ -253,18 +253,20 @@ std::string AccountsDatabase::statusMessage(AccountStatus status)
     }
 }
 
-bool AccountsDatabase::isValidEmail(const std::string& email) const
+EmailValidationErrors AccountsDatabase::isValidEmail(const std::string& email) const
 {
-    const auto atPos = email.find('@');
-    if (atPos == std::string::npos || atPos == 0)
-        return false;
-
-    const auto dotPos = email.find('.', atPos + 1);
-    if (dotPos == std::string::npos || dotPos == atPos + 1)
-        return false;
-
-    return dotPos < email.size() - 1;
+    EmailValidationErrors errors;
+    errors.isNotEmpty = !email.empty();
+    errors.hasAtSymbol = email.find('@') != std::string::npos;
+    errors.hasNoSpaces = email.find(' ') == std::string::npos;
+    const size_t atPos = email.find('@');
+    if (atPos != std::string::npos)    {
+        const size_t dotPos = email.find('.', atPos);
+        errors.hasDotAfterAt = dotPos != std::string::npos && dotPos < email.size() - 1;
+    }
+    return errors;
 }
+
 
 StrongPasswordErrors AccountsDatabase::isStrongPassword(const std::string& password) const
 {
@@ -320,4 +322,10 @@ int AccountsDatabase::allocateAccountNumber()
     if (nextAccountNumber_ <= 0)
         return -1;
     return nextAccountNumber_++;
+}
+
+
+bool AccountsDatabase::isEmailTaken(const std::string& email) const
+{
+    return accountsByEmail_.find(email) != accountsByEmail_.end();
 }

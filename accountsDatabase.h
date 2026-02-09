@@ -17,6 +17,13 @@ struct StrongPasswordErrors {
     bool isLongEnough = false;
 };
 
+struct EmailValidationErrors {
+    bool hasAtSymbol = false;
+    bool hasDotAfterAt = false;
+    bool hasNoSpaces = false;
+    bool isNotEmpty = false;
+};
+
 struct AccountRecord
 {
     std::string email;
@@ -70,7 +77,8 @@ public:
     static std::string statusMessage(AccountStatus status);
 
 private:
-    bool isValidEmail(const std::string& email) const;
+    EmailValidationErrors isValidEmail(const std::string& email) const;
+    bool isEmailTaken(const std::string& email) const;
     std::string hashPassword(const std::string& password) const;
     int allocateUserId();
     int allocateAccountNumber();
