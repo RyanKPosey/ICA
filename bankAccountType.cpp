@@ -60,8 +60,11 @@ bool bankAccountType::withdraw(double amount)
     if (amount <= 0.0)
         return false;
 
-    if (amount <= balance_)
-        balance_ -= amount;
+    if (amount > balance_) {
+        return false;
+    }
+    
+    balance_ -= amount;
     // else: ignore (no overdraft in stub)
     return true;
 }
