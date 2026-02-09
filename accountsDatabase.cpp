@@ -7,6 +7,20 @@
 AccountsDatabase::AccountsDatabase()
     : nextUserId_{100000}, nextAccountNumber_{200000}
 {
+    const std::string testEmail = "test@account.com";
+    const std::string testPassword = "password";
+
+    const int userId = allocateUserId();
+    if (userId > 0)
+    {
+        AccountRecord record;
+        record.email = testEmail;
+        record.passwordHash = hashPassword(testPassword);
+        record.userId = userId;
+
+        accountsByEmail_.emplace(testEmail, record);
+        assignedUserIds_.insert(userId);
+    }
 }
 
 AccountStatus AccountsDatabase::addAccount(const std::string& email, const std::string& password)
