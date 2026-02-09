@@ -6,14 +6,16 @@ serviceChargeCheckingType::serviceChargeCheckingType(const std::string& name, in
 {
 }
 
-void serviceChargeCheckingType::withdraw(double amount)
+bool serviceChargeCheckingType::withdraw(double amount)
 {
-    if (amount <= 0.0) return;
+    if (amount <= 0.0) return false;
 
     if (amount + serviceFee_ <= balance_)
     {
         balance_ -= (amount + serviceFee_);
+        return true;
     }
+    return false;
 }
 
 void serviceChargeCheckingType::print() const

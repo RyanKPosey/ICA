@@ -9,7 +9,7 @@ class serviceChargeCheckingType : public bankAccountType
 public:
     serviceChargeCheckingType(const std::string& name, int accountNumber, double balance);
 
-    void withdraw(double amount) override;
+    bool withdraw(double amount) override;
     void print() const override;
 
 private:

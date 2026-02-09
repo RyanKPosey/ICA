@@ -10,7 +10,7 @@ public:
     certificateOfDepositType(const std::string& name,int accountNumber,double balance,double interestRate,int maturityMonths);
 
     void createMonthlyStatement() override;
-    void withdraw(double amount) override;
+    bool withdraw(double amount) override;
     void print() const override;
 
 private:

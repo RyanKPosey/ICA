@@ -14,14 +14,15 @@ void certificateOfDepositType::createMonthlyStatement()
     if (monthsLeft_ > 0) monthsLeft_--;
 }
 
-void certificateOfDepositType::withdraw(double amount)
+bool certificateOfDepositType::withdraw(double amount)
 {
-    if (amount <= 0.0) return;
+    if (amount <= 0.0) return false;
 
     if (monthsLeft_ == 0)
     {
-        bankAccountType::withdraw(amount);
+        return bankAccountType::withdraw(amount);
     }
+    return false;
 }
 
 void certificateOfDepositType::print() const
