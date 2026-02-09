@@ -3,16 +3,16 @@
 
 #include "bankAccountType.h"
 #include <string>
-using namespace std;
 
-class checkingAccountType
+class checkingAccountType : public bankAccountType
 {
-    string name_;
-    int accountNumber_;
-    float balance_ = 0;
+public:
+    checkingAccountType(const std::string& name, int accountNumber, double accountBalance, int foreignKey = -1);
+
+    int getForeignKey() const;
+
+private:
     int foreignKey_;
-    public:
-        checkingAccountType(const std::string& name, int accountNumber, double accountBalance, int foreignKey);
 };
 
 #endif // CHECKING_ACCOUNT_TYPE_H  

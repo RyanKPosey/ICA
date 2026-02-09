@@ -10,7 +10,7 @@ class bankAccountType
 public:
     bankAccountType();
     bankAccountType(const std::string& name, int accountNumber, double balance);
-    virtual ~bankAccountType() = default;
+    virtual ~bankAccountType() = 0;
 
     // Accessors / mutators
     void setName(const std::string& name);

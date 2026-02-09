@@ -13,6 +13,8 @@ bankAccountType::bankAccountType(const std::string& name, int accountNumber, dou
 {
 }
 
+bankAccountType::~bankAccountType() = default;
+
 void bankAccountType::setName(const std::string& name)
 {
     name_ = name;
