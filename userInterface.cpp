@@ -103,7 +103,34 @@ double UserInterface::getMoney(const std::string& prompt) {
 }
 
 void UserInterface::createAccountFlow() {
-    std::string email = getLine("Email: ");
+    std::string email;
+    while (true) {
+        email = getLine("Email: ");
+        EmailValidationErrors errors = db_.isValidEmail(email);
+
+        bool isValid = errors.isNotEmpty && 
+                       errors.hasAtSymbol && 
+                       errors.hasDotAfterAt && 
+                       errors.hasNoSpaces;
+
+        if (!isValid) {
+            std::cout << "Invalid email format:\n";
+            if (!errors.isNotEmpty) std::cout << "- Email cannot be empty\n";
+            if (!errors.hasAtSymbol) std::cout << "- Must contain '@'\n";
+            if (!errors.hasDotAfterAt) std::cout << "- Must contain a dot after '@'\n";
+            if (!errors.hasNoSpaces) std::cout << "- Must not contain spaces\n";
+            std::cout << "Please try again.\n";
+            continue;
+        }
+
+        if (db_.isEmailTaken(email)) {
+            std::cout << "This email is already taken. Please try again.\n";
+            continue;
+        }
+        
+        break;
+    }
+
     std::string pass;
 
     while (true) {

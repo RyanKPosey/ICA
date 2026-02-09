@@ -25,7 +25,8 @@ AccountsDatabase::AccountsDatabase()
 
 AccountStatus AccountsDatabase::addAccount(const std::string& email, const std::string& password)
 {
-    if (!isValidEmail(email))
+    EmailValidationErrors eErrors = isValidEmail(email);
+    if (!eErrors.isNotEmpty || !eErrors.hasAtSymbol || !eErrors.hasDotAfterAt || !eErrors.hasNoSpaces)
         return AccountStatus::kInvalidEmail;
 
     StrongPasswordErrors errors = isStrongPassword(password);

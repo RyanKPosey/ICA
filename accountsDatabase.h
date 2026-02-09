@@ -76,9 +76,10 @@ public:
 
     static std::string statusMessage(AccountStatus status);
 
-private:
     EmailValidationErrors isValidEmail(const std::string& email) const;
     bool isEmailTaken(const std::string& email) const;
+
+private:
     std::string hashPassword(const std::string& password) const;
     int allocateUserId();
     int allocateAccountNumber();
