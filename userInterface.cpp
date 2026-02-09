@@ -102,11 +102,34 @@ double UserInterface::getMoney(const std::string& prompt) {
 
 void UserInterface::createAccountFlow() {
     std::string email = getLine("Email: ");
-    std::string pass  = getLine("Password: ");
+    std::string pass;
+
+    while (true) {
+        pass = getLine("Password: ");
+        StrongPasswordErrors errors = db_.isStrongPassword(pass);
+        
+        bool isStrong = errors.isLongEnough && 
+                        errors.hasUppercase && 
+                        errors.hasLowercase && 
+                        errors.hasDigit && 
+                        errors.hasSpecialChar;
+
+        if (isStrong) {
+            break;
+        }
+
+        std::cout << "Password does not meet complexity requirements:\n";
+        if (!errors.isLongEnough) std::cout << "- Must be at least 8 characters long\n";
+        if (!errors.hasUppercase) std::cout << "- Must contain at least one uppercase letter\n";
+        if (!errors.hasLowercase) std::cout << "- Must contain at least one lowercase letter\n";
+        if (!errors.hasDigit) std::cout << "- Must contain at least one digit\n";
+        if (!errors.hasSpecialChar) std::cout << "- Must contain at least one special character\n";
+        std::cout << "Please try again.\n";
+    }
 
     int newId = db_.createUser(email, pass);   // TODO_CALL_DB
     if (newId < 0) {
-        std::cout << "Could not create account.\n";
+        std::cout << "Could not create account (Duplicate email or invalid format).\n";
         return;
     }
 

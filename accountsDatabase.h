@@ -9,6 +9,14 @@
 #include "checkingAccountType.h"
 #include "savingsAccountType.h"
 
+struct StrongPasswordErrors {
+    bool hasUppercase = false;
+    bool hasLowercase = false;
+    bool hasDigit = false;
+    bool hasSpecialChar = false;
+    bool isLongEnough = false;
+};
+
 struct AccountRecord
 {
     std::string email;
@@ -54,11 +62,12 @@ public:
     bool transferCheckingToSavings(int userId, double amount);
     bool transferSavingsToChecking(int userId, double amount);
 
+    StrongPasswordErrors isStrongPassword(const std::string& password) const;
+
     static std::string statusMessage(AccountStatus status);
 
 private:
     bool isValidEmail(const std::string& email) const;
-    bool isStrongPassword(const std::string& password) const;
     std::string hashPassword(const std::string& password) const;
     int allocateUserId();
     int allocateAccountNumber();

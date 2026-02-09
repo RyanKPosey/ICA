@@ -28,7 +28,8 @@ AccountStatus AccountsDatabase::addAccount(const std::string& email, const std::
     if (!isValidEmail(email))
         return AccountStatus::kInvalidEmail;
 
-    if (!isStrongPassword(password))
+    StrongPasswordErrors errors = isStrongPassword(password);
+    if (!errors.isLongEnough || !errors.hasUppercase || !errors.hasLowercase || !errors.hasDigit || !errors.hasSpecialChar)
         return AccountStatus::kWeakPassword;
 
     if (accountsByEmail_.find(email) != accountsByEmail_.end())
@@ -253,10 +254,10 @@ bool AccountsDatabase::isValidEmail(const std::string& email) const
     return dotPos < email.size() - 1;
 }
 
-bool AccountsDatabase::isStrongPassword(const std::string& password) const
+StrongPasswordErrors AccountsDatabase::isStrongPassword(const std::string& password) const
 {
-    if (password.size() < 8)
-        return false;
+    StrongPasswordErrors errors;
+    errors.isLongEnough = password.size() >= 8;
 
     bool hasUpper = false;
     bool hasLower = false;
@@ -266,16 +267,16 @@ bool AccountsDatabase::isStrongPassword(const std::string& password) const
     for (char ch : password)
     {
         if (std::isupper(static_cast<unsigned char>(ch)))
-            hasUpper = true;
+            errors.hasUppercase = true;
         else if (std::islower(static_cast<unsigned char>(ch)))
-            hasLower = true;
+            errors.hasLowercase = true;
         else if (std::isdigit(static_cast<unsigned char>(ch)))
-            hasDigit = true;
+            errors.hasDigit = true;
         else
-            hasSymbol = true;
+            errors.hasSpecialChar = true;
     }
 
-    return hasUpper && hasLower && hasDigit && hasSymbol;
+    return errors;
 }
 
 // Need to replace hashing algo to a better one with salting in future
